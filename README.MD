@@ -11,3 +11,6 @@ npm i axios
 npm install react-bootstrap bootstrap 
 
 npm run dev
+
+
+API - https://www.thecocktaildb.com/
