@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {Button, Form, Row, Col,Alert} from 'react-bootstrap'
 import useCategorias from '../hooks/useCategorias'
+import useBebidas from '../hooks/useBebidas'
 
 const Formulario = () => {
 
@@ -9,6 +10,8 @@ const Formulario = () => {
         categoria: ''
      })
     const {categorias} = useCategorias()
+
+    const {obtenerBebidas} = useBebidas()
 
     const [alerta, setAlerta] = useState('')
 
@@ -20,6 +23,7 @@ const Formulario = () => {
             return
         }
         setAlerta('')
+        obtenerBebidas(busqueda)
         
     }
   return (
