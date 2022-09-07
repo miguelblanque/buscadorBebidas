@@ -14,3 +14,7 @@ npm run dev
 
 
 API - https://www.thecocktaildb.com/
+
+TODO: incluir localStorage
+      incluir listado favoritos
+      incluir boton añadir a favoritos
