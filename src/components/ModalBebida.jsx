@@ -1,12 +1,16 @@
-import { Modal, Image, ModalBody } from "react-bootstrap"
+import { Button, Modal, Image, ModalBody } from "react-bootstrap"
 import useBebidas from "../hooks/useBebidas"
 
 const ModalBebida = () => {
 
-    const {modal, handleModalClick, receta, cargando} = useBebidas()
+    const {modal, handleModalClick, receta, cargando, handleAgregarFavoritos} = useBebidas()
    
-    console.log(receta)
+    //console.log('receta',receta)
 
+    /**
+     * Funcion para mostrar los ingredientes informados en la receta del 1 al 15
+     * @returns 
+     */
     const mostrarIngredientes =  () =>{
       let ingredientes = []
       for(let i = 1 ; i <16;i++){
@@ -18,6 +22,10 @@ const ModalBebida = () => {
       }
       return ingredientes
     }
+
+   
+
+    
   return (
     !cargando && (
         <Modal show={modal } onHide={ () =>{
@@ -37,7 +45,19 @@ const ModalBebida = () => {
                     <h2>Ingredientes y Cantidad</h2>
                     {mostrarIngredientes()}
                 </div>
+
+                <Button 
+                variant={'warning'}
+                className="w-100 text-uppercase mt-2"
+                onClick={
+                  handleAgregarFavoritos(receta)
+                }
+            >
+              Agregar Favoritos
+            </Button>
+
             </Modal.Body>
+            
         </Modal>
     )
   )

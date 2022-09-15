@@ -7,6 +7,8 @@ const BebidasProvider = ({children}) => {
 
   const [bebidas, setBebidas] = useState([])
 
+  const [favoritos, setFavoritos] = useState([])
+
   const[modal, setModal] = useState(false)
 
   const [bebidaId, setBebidaId] = useState(null)
@@ -16,12 +18,40 @@ const BebidasProvider = ({children}) => {
   const [cargando, setCargando] = useState(false)
 
 
+
+
+
+  //obtenemos los favoritos de LocalStorage
+  useEffect(() => {
+    obtenerBebidas()
+    const obtenerLs=()=>{
+        const favoritosLS = JSON.parse(localStorage.getItem('favoritos')) ?? []; 
+      
+        setFavoritos(favoritosLS);
+        console.log('Obteniendo LS Favoritos: ',favoritosLS)
+
+        }
+    obtenerLs();
+     
+    }, [])
+
+  //guardamos los favoritos en LocalStorage
+  useEffect(()=> {
+    console.log('Guardando localStorage')
+    if(favoritos.length>0){
+    localStorage.setItem('favoritos', JSON.stringify(favoritos)) ;
+        console.log('Guardando en LS: ',favoritos)
+    }
+  }, [favoritos])
+
+
+
   const obtenerBebidas = async datos => {
     try{
         const url=`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${datos.nombre}&c=${datos.categoria}`
 
         const { data } = await axios(url)
-        console.log(data)
+        //console.log(data)
         setBebidas(data.drinks)
     } catch (error ) {
         console.log(error)
@@ -30,11 +60,11 @@ const BebidasProvider = ({children}) => {
 
   /**
    * UseEffect para obtener las Bebidas
-   */
+   
   useEffect(() =>{
       obtenerBebidas()
   }, [])
-
+ */
   /**
    * Funcion para controlar cuando se muestra el modal con la bebida al hacer click 
    */
@@ -47,6 +77,15 @@ const BebidasProvider = ({children}) => {
     setBebidaId(id)
   }
 
+  const handleAgregarFavoritos = (receta) => {
+    console.log('receta handleAgregarFavoritos',receta)
+    //if(favoritos?.some(rece => rece.bebidaId===receta.bebidaId)){
+     //return
+    //}
+    localStorage.setItem('favoritos', JSON.stringify(receta)) ;
+    setFavoritos([...favoritos,receta])
+   console.log('add Favorite - ',favoritos)
+  }
 
   useEffect(() =>{
     setCargando(true)
@@ -77,7 +116,8 @@ const BebidasProvider = ({children}) => {
           modal,
           handleBebibaIdClick,
           receta,
-          cargando
+          cargando,
+          handleAgregarFavoritos
           
         }}
     >
