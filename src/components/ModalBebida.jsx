@@ -3,7 +3,7 @@ import useBebidas from "../hooks/useBebidas"
 
 const ModalBebida = () => {
 
-    const {modal, handleModalClick, receta, cargando, handleAgregarFavoritos} = useBebidas()
+    const {modal, handleModalClick, receta, cargando} = useBebidas()
    
     //console.log('receta',receta)
 
@@ -32,6 +32,7 @@ const ModalBebida = () => {
           handleModalClick()
           }}>
           <Image
+           className='card-img-top'
             src={receta.strDrinkThumb}
             alt={`Imagen receta ${receta.strDrink}`}
           />
@@ -46,15 +47,7 @@ const ModalBebida = () => {
                     {mostrarIngredientes()}
                 </div>
 
-                <Button 
-                variant={'warning'}
-                className="w-100 text-uppercase mt-2"
-                onClick={
-                  handleAgregarFavoritos(receta)
-                }
-            >
-              Agregar Favoritos
-            </Button>
+               
 
             </Modal.Body>
             

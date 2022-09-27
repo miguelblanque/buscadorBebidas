@@ -7,8 +7,6 @@ const BebidasProvider = ({children}) => {
 
   const [bebidas, setBebidas] = useState([])
 
-  const [favoritos, setFavoritos] = useState([])
-
   const[modal, setModal] = useState(false)
 
   const [bebidaId, setBebidaId] = useState(null)
@@ -21,28 +19,7 @@ const BebidasProvider = ({children}) => {
 
 
 
-  //obtenemos los favoritos de LocalStorage
-  useEffect(() => {
-    obtenerBebidas()
-    const obtenerLs=()=>{
-        const favoritosLS = JSON.parse(localStorage.getItem('favoritos')) ?? []; 
-      
-        setFavoritos(favoritosLS);
-        console.log('Obteniendo LS Favoritos: ',favoritosLS)
-
-        }
-    obtenerLs();
-     
-    }, [])
-
-  //guardamos los favoritos en LocalStorage
-  useEffect(()=> {
-    console.log('Guardando localStorage')
-    if(favoritos.length>0){
-    localStorage.setItem('favoritos', JSON.stringify(favoritos)) ;
-        console.log('Guardando en LS: ',favoritos)
-    }
-  }, [favoritos])
+ 
 
 
 
@@ -60,11 +37,11 @@ const BebidasProvider = ({children}) => {
 
   /**
    * UseEffect para obtener las Bebidas
-   
+   */
   useEffect(() =>{
       obtenerBebidas()
   }, [])
- */
+ 
   /**
    * Funcion para controlar cuando se muestra el modal con la bebida al hacer click 
    */
@@ -77,15 +54,6 @@ const BebidasProvider = ({children}) => {
     setBebidaId(id)
   }
 
-  const handleAgregarFavoritos = (receta) => {
-    console.log('receta handleAgregarFavoritos',receta)
-    //if(favoritos?.some(rece => rece.bebidaId===receta.bebidaId)){
-     //return
-    //}
-    localStorage.setItem('favoritos', JSON.stringify(receta)) ;
-    setFavoritos([...favoritos,receta])
-   console.log('add Favorite - ',favoritos)
-  }
 
   useEffect(() =>{
     setCargando(true)
@@ -116,8 +84,7 @@ const BebidasProvider = ({children}) => {
           modal,
           handleBebibaIdClick,
           receta,
-          cargando,
-          handleAgregarFavoritos
+          cargando
           
         }}
     >
